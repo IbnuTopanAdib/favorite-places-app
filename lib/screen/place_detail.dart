@@ -9,9 +9,22 @@ class PlaceDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail Place"),
+        title: const Text("Detail Place"),
       ),
-      body: Center(child: Text(place.name),),
+      body: Stack(
+        children: [
+          Image.file(
+            place.image,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Text(place.name),
+          ),
+        ],
+      ),
     );
   }
 }

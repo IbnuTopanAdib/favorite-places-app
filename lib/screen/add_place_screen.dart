@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:favorite_places/model/place.dart';
 import 'package:favorite_places/provider/places_provider.dart';
 import 'package:favorite_places/widget/image_input.dart';
@@ -12,12 +14,18 @@ class AddPlaceScreen extends ConsumerStatefulWidget {
 }
 
 class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
+  File? _selectedImage;
   final _formKey = GlobalKey<FormState>();
   String _enteredTitle = '';
   void _savePlace() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      ref.read(placesProvider.notifier).addPlace(Place(name: _enteredTitle));
+      if (_selectedImage == null) {
+        return;
+      }
+      ref
+          .read(placesProvider.notifier)
+          .addPlace(Place(name: _enteredTitle, image: _selectedImage!));
       Navigator.of(context).pop();
     }
   }
@@ -62,7 +70,11 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                const ImageInput(),
+                ImageInput(
+                  onPickImage: (image) {
+                    _selectedImage = image;
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),

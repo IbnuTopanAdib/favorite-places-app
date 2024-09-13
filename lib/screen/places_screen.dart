@@ -37,6 +37,12 @@ class _PlacesScreenState extends ConsumerState<PlacesScreen> {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => PlaceDetail(place: place)));
                   },
+                  leading: CircleAvatar(
+                    radius: 26,
+                    backgroundImage: FileImage(
+                      place.image,
+                    ),
+                  ),
                   title: Text(
                     place.name,
                     style: Theme.of(context)
